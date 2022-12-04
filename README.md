@@ -1,43 +1,22 @@
-# AdventOfCode-TS
+# Advent of Code 2022 - TypeScript
 
-Project template for Advent of Code challenges
+My quick and dirty TypeScript solutions for 🎄 [Advent of Code 2022](https://adventofcode.com/2022) 🎄
+
+---
 
 ### Get started
 
-To get started, run the `npm run generate` command followed by a year argument
-eg. `npm run generate 2022`
+install
+`npm i`
 
-after that, modify the file found at `./src/index.ts` to run any year, day, or part
+run
+`npm start`
 
-for example, after running `npm run generate 2022`
-change the index file to something like...
-
----
-
-```js
-import { run2022 } from "./2022";
-
-run2022();
-```
-
-or
-
-```js
-import { day_04 } from "./2022/day_04/day_04";
-
-day04();
-```
-
-or
-
-```js
-import { part1 } from "./2022/day_02/part_1";
-// day 2 part 1
-part1();
-```
+run tests
+`npm test`
 
 ---
 
-### Testing
+Project generated from my [TypeScript Advent project template](https://github.com/neon-inkblast/AdvenTS). Try it yourself if you want :)
 
-you can also start tests using `npm test`. Might be a nice way to TDD code...
+_Currently 4/25 on 4/12/22_
