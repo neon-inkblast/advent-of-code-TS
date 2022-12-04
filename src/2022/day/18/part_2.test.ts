@@ -4,6 +4,6 @@ describe("day 18 - part 2", () => {
   it("solves the puzzle!", () => {
     const input = ["1", "2", "3"];
     const result = part2(input);
-    expect(result).toBe(1);
+    expect(result).toBe("1");
   });
 });
