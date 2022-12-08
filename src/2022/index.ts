@@ -39,8 +39,8 @@ export function run2022() {
   printXmas();
   day_07();
   printXmas();
-  // day_08();
-  // printXmas();
+  day_08();
+  printXmas();
   // day_09();
   // printXmas();
   // day_10();
