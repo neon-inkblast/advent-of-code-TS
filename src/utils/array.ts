@@ -1,20 +1,54 @@
-export function splitOnEmpty<T>(arr:T[]): T[][]{ 
-    return splitOnX(arr, "")
+export function splitOnEmpty(arr: string[]): string[][] {
+  return splitOnX(arr, "");
 }
 
-export function splitOnX<T>(arr:T[], token:string): T[][]{ 
-    const newArr:T[][] = [];
-    let tempArr:T[] = [];
-    arr.forEach(x => {
-        if (x === token) {
-            newArr.push(tempArr);
-            tempArr = [];
-        } else {
-            tempArr.push(x);
-        }
-    })
-    if (tempArr.length > 0) {
-        newArr.push(tempArr);
+export function sum<T>(arr: T[]): number {
+  return arr.map((x) => +x).reduce((a, b) => a + b);
+}
+
+export function max<T>(arr: T[]): number {
+  return sortDesc(arr.slice())[0];
+}
+export function min<T>(arr: T[]): number {
+  return sortAsc(arr.slice())[0];
+}
+export function sortAsc(arr: any[]): any {
+  return arr.sort((a, b) => a - b);
+}
+export function sortDesc(arr: any[]): any[] {
+  return arr.sort((a, b) => b - a);
+}
+
+export function splitOnX<T>(arr: T[], token: T): T[][] {
+  const newArr: T[][] = [];
+  let tempArr: T[] = [];
+  arr.forEach((x) => {
+    if (x === token) {
+      newArr.push(tempArr);
+      tempArr = [];
+    } else {
+      tempArr.push(x);
     }
-    return newArr;
+  });
+  if (tempArr.length > 0) {
+    newArr.push(tempArr);
+  }
+  return newArr;
+}
+
+export function splitEvery<T>(arr: T[], n: number): T[][] {
+  const newArr: T[][] = [];
+  let tempArr: T[] = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i % n === 0 && tempArr.length > 0) {
+      newArr.push(tempArr);
+      tempArr = [];
+    }
+    tempArr.push(arr[i]);
+  }
+
+  if (tempArr.length > 0) {
+    newArr.push(tempArr);
+  }
+  return newArr;
 }
