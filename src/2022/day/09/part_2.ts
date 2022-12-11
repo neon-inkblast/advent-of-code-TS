@@ -1,7 +1,12 @@
+import {
+  Point,
+  addPoints,
+  distanceBetween,
+  normalisePoint
+} from "../../../utils/point";
 import { readInputFromFile } from "../../../utils/readInputFromFile";
 
 type DirIns = "D" | "U" | "R" | "L";
-type Point = [number, number];
 
 export function part2(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
@@ -68,21 +73,4 @@ function moveSeg(target: Point, segment: Point) {
   const dest: Point = normalisePoint([xDist, yDist]);
   // return the new point
   return addPoints(segment, dest);
-}
-
-// normalise point values between (-1 < n < 1)
-function normalisePoint(p: Point): Point {
-  return [Math.max(-1, Math.min(1, p[0])), Math.max(-1, Math.min(1, p[1]))];
-}
-
-// add 2 points together
-function addPoints(a: Point, b: Point): Point {
-  return [a[0] + b[0], b[1] + a[1]];
-}
-
-// return the max distance between 2 points in X or Y axes
-function distanceBetween(a: Point, b: Point): number {
-  const xDist = Math.abs(a[0] - b[0]);
-  const yDist = Math.abs(a[1] - b[1]);
-  return Math.max(xDist, yDist);
 }

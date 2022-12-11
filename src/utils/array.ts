@@ -1,7 +1,3 @@
-export function splitOnEmpty(arr: string[]): string[][] {
-  return splitOnX(arr, "");
-}
-
 export function sum<T>(arr: T[]): number {
   return arr.map((x) => +x).reduce((a, b) => a + b);
 }
@@ -9,14 +5,21 @@ export function sum<T>(arr: T[]): number {
 export function max<T>(arr: T[]): number {
   return sortDesc(arr.slice())[0];
 }
+
 export function min<T>(arr: T[]): number {
   return sortAsc(arr.slice())[0];
 }
+
 export function sortAsc(arr: any[]): any {
   return arr.sort((a, b) => a - b);
 }
+
 export function sortDesc(arr: any[]): any[] {
   return arr.sort((a, b) => b - a);
+}
+
+export function splitOnEmpty(arr: string[]): string[][] {
+  return splitOnX(arr, "");
 }
 
 export function splitOnX<T>(arr: T[], token: T): T[][] {
@@ -51,4 +54,18 @@ export function splitEvery<T>(arr: T[], n: number): T[][] {
     newArr.push(tempArr);
   }
   return newArr;
+}
+
+export function createArrayOf<T>(size: number, fill: T): T[] {
+  return new Array(size)
+    .fill(0)
+    .map((_) => (typeof fill === "function" ? fill() : fill));
+}
+
+export function create2dArrayOf<T>(
+  rows: number,
+  columns: number,
+  fill: T
+): T[][] {
+  return createArrayOf<any>(rows, () => createArrayOf<T>(columns, fill));
 }
