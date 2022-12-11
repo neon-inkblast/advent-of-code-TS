@@ -2,6 +2,10 @@ export function sum<T>(arr: T[]): number {
   return arr.map((x) => +x).reduce((a, b) => a + b);
 }
 
+export function multi<T>(arr: T[]): number {
+  return arr.map((x) => +x).reduce((a, b) => a * b);
+}
+
 export function max<T>(arr: T[]): number {
   return sortDesc(arr.slice())[0];
 }
