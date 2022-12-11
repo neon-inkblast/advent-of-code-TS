@@ -4,7 +4,7 @@ import {
   distanceBetween,
   normalisePoint
 } from "../../../utils/point";
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 
 type DirIns = "D" | "U" | "R" | "L";
 

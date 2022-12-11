@@ -1,4 +1,4 @@
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 
 export function part2(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
@@ -8,11 +8,11 @@ export function part2(input?: string[]) {
       const pairs = line.split(",");
       const pair1 = {
         from: +pairs[0].split("-")[0],
-        to: +pairs[0].split("-")[1],
+        to: +pairs[0].split("-")[1]
       };
       const pair2 = {
         from: +pairs[1].split("-")[0],
-        to: +pairs[1].split("-")[1],
+        to: +pairs[1].split("-")[1]
       };
       return (
         // [----pair 1----]

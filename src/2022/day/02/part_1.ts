@@ -1,4 +1,4 @@
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 
 export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
@@ -14,13 +14,13 @@ export function part1(input?: string[]) {
     const choicePoints: Record<string, number> = {
       X: 1,
       Y: 2,
-      Z: 3,
+      Z: 3
     };
 
     const gamePoints: Record<string, Record<string, number>> = {
       A: { X: 3, Y: 6, Z: 0 },
       B: { X: 0, Y: 3, Z: 6 },
-      C: { X: 6, Y: 0, Z: 3 },
+      C: { X: 6, Y: 0, Z: 3 }
     };
 
     const game = gamePoints[opponent][me];

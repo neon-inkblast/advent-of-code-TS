@@ -4,7 +4,7 @@ import {
   distanceBetween,
   normalisePoint
 } from "../../../utils/point";
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 
 // Types for instruction direction and Point(x,y)
 type DirIns = "D" | "L" | "U" | "R";

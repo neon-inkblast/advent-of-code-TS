@@ -1,4 +1,4 @@
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 import { Directory, File } from "./types";
 
 export function part1(input?: string[]) {
@@ -8,23 +8,20 @@ export function part1(input?: string[]) {
   const pointer: string[] = [];
   let cwd: Directory = fsRoot;
 
-  lines.forEach(line => {
+  lines.forEach((line) => {
     const tokens = line.split(" ");
     if (tokens[0] === "$") {
       if (tokens[1] === "cd") {
-        changeDir(tokens[2])
+        changeDir(tokens[2]);
       }
     } else {
       if (tokens[0] === "dir") {
         addDir(tokens[1]);
-      }
-      else {
+      } else {
         addFile(tokens[0], tokens[1]);
-
       }
     }
-
-  })
+  });
 
   function addDir(name: string): void {
     cwd.files[name] = { type: "dir", name, files: {} };
@@ -55,9 +52,7 @@ export function part1(input?: string[]) {
     return fs;
   }
 
-
   function findDirs(fsRoot: Directory): any {
-
     const found: number[] = [];
 
     function sumDirs(dir: Directory): number {
@@ -67,26 +62,26 @@ export function part1(input?: string[]) {
         // if directory recurse and find child directory size
         if (file.type === "dir") {
           const totalSize = sumDirs(file);
-          found.push(totalSize)
+          found.push(totalSize);
           dirSum += totalSize;
         } else {
           // else just add to this dirs size
           dirSum += file.size;
         }
-      })
-      return dirSum
+      });
+      return dirSum;
     }
 
-    // invoke with root path and push result to found array 
+    // invoke with root path and push result to found array
     // to capture value for root dir
     found.push(sumDirs(fsRoot));
 
-    return found
+    return found;
   }
 
   const found: number[] = findDirs(fsRoot);
 
-  const maxSize = 100000
+  const maxSize = 100000;
   // filter all directorys less than max size and then sum up collection
-  return found.filter(x => x < maxSize).reduce((a, b) => a + b);
+  return found.filter((x) => x < maxSize).reduce((a, b) => a + b);
 }

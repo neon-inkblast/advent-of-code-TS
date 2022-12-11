@@ -1,4 +1,4 @@
-import { readInputFromFile } from "../../../utils/readInputFromFile";
+import { readInputFromFile } from "../../../utils/io";
 import { Directory, File } from "./types";
 
 export function part2(input?: string[]) {
@@ -8,28 +8,25 @@ export function part2(input?: string[]) {
   const pointer: string[] = [];
   let cwd: Directory = fsRoot;
 
-  lines.forEach(line => {
+  lines.forEach((line) => {
     const tokens = line.split(" ");
     // if command token '$'
     if (tokens[0] === "$") {
       // if command is cd
       if (tokens[1] === "cd") {
         // change dir
-        changeDir(tokens[2])
+        changeDir(tokens[2]);
       }
     } else {
       // if is a directory listing
       if (tokens[0] === "dir") {
         addDir(tokens[1]);
-      }
-      else {
+      } else {
         // add the file
         addFile(tokens[0], tokens[1]);
-
       }
     }
-
-  })
+  });
 
   // add a directory object to the current directory
   function addDir(name: string): void {
@@ -72,11 +69,10 @@ export function part2(input?: string[]) {
     return fs;
   }
 
-
   // find the sizes of all directories
   function findDirs(fsRoot: Directory): any {
     const found: number[] = [];
-    
+
     // sum up a directory and it's contents
     function sumDirs(dir: Directory): number {
       let dirSum = 0;
@@ -85,21 +81,21 @@ export function part2(input?: string[]) {
         // if directory recurse and find child directory size
         if (file.type === "dir") {
           const totalSize = sumDirs(file);
-          found.push(totalSize)
+          found.push(totalSize);
           dirSum += totalSize;
         } else {
           // else just add to this dirs size
           dirSum += file.size;
         }
-      })
-      return dirSum
+      });
+      return dirSum;
     }
 
-    // invoke with root path and push result to found array 
+    // invoke with root path and push result to found array
     // to capture value for root dir
     found.push(sumDirs(fsRoot));
 
-    return found
+    return found;
   }
 
   // from all sizes
@@ -110,11 +106,11 @@ export function part2(input?: string[]) {
   const required = 30000000;
   // disk capacity
   const total = 70000000;
-  
+
   // amount needed to free up enough space
   const need = required - (total - used);
-  
-  // filter out folders that are too small, 
+
+  // filter out folders that are too small,
   // then find the smallest that is large enough
-  return found.filter(x => x >= need).sort((a, b) => a - b)[0]
+  return found.filter((x) => x >= need).sort((a, b) => a - b)[0];
 }
