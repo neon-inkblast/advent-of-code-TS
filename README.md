@@ -19,4 +19,4 @@ run tests
 
 Project generated from my [TypeScript Advent project template](https://github.com/neon-inkblast/AdvenTS). Try it yourself if you want :)
 
-_Currently 4/25 on 4/12/22_
+_2022: 11/25_
