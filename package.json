@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "nodemon ./src/index.ts",
+    "run": "ts-node ./src/index.ts",
     "build": "tsc",
     "test": "jest --watch",
     "generate": "ts-node ./src/utils/template/generateYear.ts"

@@ -60,7 +60,7 @@ export function splitEvery<T>(arr: T[], n: number): T[][] {
   return newArr;
 }
 
-export function createArrayOf<T>(size: number, fill: T): T[] {
+export function createArrayOf<T>(size: number, fill: () => T | T): T[] {
   return new Array(size)
     .fill(0)
     .map((_) => (typeof fill === "function" ? fill() : fill));
@@ -69,7 +69,7 @@ export function createArrayOf<T>(size: number, fill: T): T[] {
 export function create2dArrayOf<T>(
   rows: number,
   columns: number,
-  fill: T
+  fill: () => T
 ): T[][] {
   return createArrayOf<any>(rows, () => createArrayOf<T>(columns, fill));
 }

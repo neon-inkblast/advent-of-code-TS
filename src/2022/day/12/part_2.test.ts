@@ -1,9 +1,15 @@
 import { part2 } from "./part_2";
 
 describe("day 12 - part 2", () => {
-  it("solves the puzzle!", () => {
-    const input = ["1", "2", "3"];
+  it("Finds the best path to set up permanently!", () => {
+    const input = [
+      "Sabqponm",
+      "abcryxxl",
+      "accszExk",
+      "acctuvwj",
+      "abdefghi"
+    ];
     const result = part2(input);
-    expect(result).toBe("1");
+    expect(result).toBe(29);
   });
 });
