@@ -41,5 +41,7 @@ export function part2(input?: string[]) {
     }
   });
 
-  return "\n" + display.map((row) => row.join("")).join("\n");
+  return (
+    "\n║ \n" + display.map((row) => "║  " + row.join("")).join("\n") + "\n║"
+  );
 }

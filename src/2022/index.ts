@@ -25,56 +25,45 @@ import { day_24 } from "./day/24/day_24";
 import { day_25 } from "./day/25/day_25";
 
 export function run2022() {
-  day_01();
-  printXmas();
-  day_02();
-  printXmas();
-  day_03();
-  printXmas();
-  day_04();
-  printXmas();
-  day_05();
-  printXmas();
-  day_06();
-  printXmas();
-  day_07();
-  printXmas();
-  day_08();
-  printXmas();
-  day_09();
-  printXmas();
-  day_10();
-  printXmas();
-  day_11();
-  printXmas();
-  day_12();
-  printXmas();
-  // day_13();
-  // printXmas();
-  // day_14();
-  // printXmas();
-  // day_15();
-  // printXmas();
-  // day_16();
-  // printXmas();
-  // day_17();
-  // printXmas();
-  // day_18();
-  // printXmas();
-  // day_19();
-  // printXmas();
-  // day_20();
-  // printXmas();
-  // day_21();
-  // printXmas();
-  // day_22();
-  // printXmas();
-  // day_23();
-  // printXmas();
-  // day_24();
-  // printXmas();
-  // day_25();
-  // printXmas();
+  const run = [
+    day_01,
+    day_02,
+    day_03,
+    day_04,
+    day_05,
+    day_06,
+    day_07,
+    day_08,
+    day_09,
+    day_10,
+    day_11,
+    day_12,
+    day_13
+    // day_14
+    // day_15,
+    // day_16,
+    // day_17,
+    // day_18,
+    // day_19,
+    // day_20,
+    // day_21,
+    // day_22,
+    // day_23,
+    // day_24,
+    // day_25
+  ];
+
+  console.log("");
+  run.slice(0, -1).forEach((day) => {
+    day();
+    console.log(
+      `╠═══════════════════════════════════════════════════════════╣`
+    );
+    // printXmas();
+  });
+
+  run[run.length - 1]();
+  console.log("╚═══════════════════════════════════════════════════════════╝");
 }
 
 function printXmas() {
