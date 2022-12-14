@@ -1,9 +1,12 @@
 import { part1 } from "./part_1";
 
 describe("day 14 - part 1", () => {
-  it("calculates the right answer!", () => {
-    const input = ["1", "2", "3"];
+  it("Counts the sands through the hourglass!", () => {
+    const input = [
+      "498,4 -> 498,6 -> 496,6",
+      "503,4 -> 502,4 -> 502,9 -> 494,9"
+    ];
     const result = part1(input);
-    expect(result).toBe("1");
+    expect(result).toBe(24);
   });
 });
