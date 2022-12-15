@@ -45,6 +45,13 @@ export function distanceBetween(a: Point, b: Point): number {
 }
 
 /**
+ * Find the max distance between 2 points on either X or Y axes
+ * */
+export function manhDistBetween(a: Point, b: Point): number {
+  return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+}
+
+/**
  * Returns the value of the element at grid coordinate P
  * @param p Point in grid
  * @param grid The grid
