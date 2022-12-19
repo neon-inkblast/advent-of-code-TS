@@ -43,7 +43,7 @@ export function run2022() {
     day_15,
     day_16,
     day_17,
-    // day_18,
+    day_18,
     // day_19,
     // day_20,
     // day_21,

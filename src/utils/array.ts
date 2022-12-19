@@ -60,16 +60,48 @@ export function splitEvery<T>(arr: T[], n: number): T[][] {
   return newArr;
 }
 
-export function createArrayOf<T>(size: number, fill: () => T | T): T[] {
+/**
+ *
+ * @param size size of new array
+ * @param fill element to fill new array with, or a function that creates elements to fill
+ * @returns
+ */
+export function createArrayOf<T>(size: number, fill: (() => T) | T): T[] {
   return new Array(size)
     .fill(0)
-    .map((_) => (typeof fill === "function" ? fill() : fill));
+    .map((_) => (typeof fill === "function" ? (fill as () => T)() : fill));
 }
 
+/**
+ *
+ * @param rows size of the base (x) dimension in the new array
+ * @param columns size of the inner (y) dimension of the new array
+ * @param fill element to fill new array with, or a function that creates elements to fill
+ * @returns
+ */
 export function create2dArrayOf<T>(
   rows: number,
   columns: number,
-  fill: () => T
+  fill: (() => T) | T,
 ): T[][] {
   return createArrayOf<any>(rows, () => createArrayOf<T>(columns, fill));
+}
+
+/**
+ *
+ * @param rows size of the base (x) dimension in the new array
+ * @param columns size of the second (y) dimension of the new array
+ * @param layers size of inner (z) dimension of a row element in the new array
+ * @param fill element to fill new array with, or a function that creates elements to fill
+ * @returns
+ */
+export function create3dArrayOf<T>(
+  rows: number,
+  columns: number,
+  layers: number,
+  fill: (() => T) | T,
+): T[][][] {
+  return create2dArrayOf<T[]>(rows, columns, () =>
+    createArrayOf<T>(layers, fill),
+  );
 }

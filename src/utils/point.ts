@@ -6,6 +6,12 @@ import { clamp } from "./math";
  * `Point[x, y]`
  */
 export type Point = [number, number];
+/**
+ * A structure for representing a 3 dimensional point
+ * for example x, y and z on a 3D grid
+ * `Point[x, y, z]`
+ */
+export type Point3D = [number, number, number];
 export type Directions = "U" | "R" | "D" | "L" | "UR" | "DR" | "UL" | "DL";
 /**
  * The 8 squares neighbouring a point on a 2D grid
@@ -18,7 +24,7 @@ export const DIRECTIONS: Record<Directions, Point> = {
   UR: [1, -1],
   DR: [1, 1],
   UL: [-1, -1],
-  DL: [-1, 1]
+  DL: [-1, 1],
 };
 
 /**
