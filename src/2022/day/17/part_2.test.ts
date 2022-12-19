@@ -1,9 +1,10 @@
+import { readFromFile } from "../../../utils/io";
 import { part2 } from "./part_2";
 
 describe("day 17 - part 2", () => {
   it("solves the puzzle!", () => {
-    const input = ["1", "2", "3"];
-    const result = part2(input);
-    expect(result).toBe("1");
+    const input = readFromFile("_test.txt", __dirname);
+    const result = part2(input[0]);
+    expect(result).toBe(1514285714288);
   });
 });
