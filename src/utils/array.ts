@@ -6,6 +6,17 @@ export function multi<T>(arr: T[]): number {
   return arr.map((x) => +x).reduce((a, b) => a * b);
 }
 
+export function addArrays(a: number[], ...b: number[][]): number[] {
+  if (b.some((arr) => a.length !== arr.length)) {
+    throw new Error("mismatched arrays");
+  }
+  return a.map((a, i) => a + sum(b.map((x) => x[i])));
+}
+
+export function multiplyArray(a: number[], b: number): number[] {
+  return a.map((a) => a * b);
+}
+
 export function max<T>(arr: T[]): number {
   return sortDesc(arr.slice())[0];
 }
