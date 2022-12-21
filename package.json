@@ -4,10 +4,10 @@
   "description": "Project template for Advent of Code challenges in TypeScript",
   "main": "index.ts",
   "scripts": {
-    "start": "nodemon ./src/index.ts",
-    "run": "ts-node ./src/index.ts",
-    "build": "tsc",
+    "start": "ts-node ./src/index.ts",
     "test": "jest --watch",
+    "dev": "nodemon ./src/index.ts",
+    "build": "tsc",
     "generate": "ts-node ./src/utils/template/generateYear.ts"
   },
   "repository": {
