@@ -100,3 +100,11 @@ export function isEqual(a: Point, b: Point) {
 export function isInGrid<T>(p: Point, grid: T[][]): boolean {
   return p[0] >= 0 && p[0] < grid[0].length && p[1] >= 0 && p[1] < grid.length;
 }
+
+export function clampPoint<T>(p: Point, xRange: Point, yRange: Point): Point {
+  return [clamp(p[0], xRange[0], xRange[1]), clamp(p[1], yRange[0], yRange[1])];
+}
+
+export function clampPointInGrid<T>(p: Point, grid: T[][]): Point {
+  return clampPoint(p, [0, grid[0].length - 1], [0, grid.length - 1]);
+}
