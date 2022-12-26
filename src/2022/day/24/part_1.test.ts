@@ -1,9 +1,16 @@
 import { part1 } from "./part_1";
 
 describe("day 24 - part 1", () => {
-  it("calculates the right answer!", () => {
-    const input = ["1", "2", "3"];
+  it("Can find a path through the storm!", () => {
+    const input = [
+      "#E######",
+      "#>>.<^<#",
+      "#.<..<<#",
+      "#>v.><>#",
+      "#<^v^^>#",
+      "######.#",
+    ];
     const result = part1(input);
-    expect(result).toBe("1");
+    expect(result).toBe(18);
   });
 });
