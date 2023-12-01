@@ -1,6 +1,7 @@
 import fs from "fs";
-import path from "path";
 import ordinal from "ordinal";
+import path from "path";
+import { PRETTY, print } from "../utils";
 
 function throwError(msg: string) {
   console.error(msg);
@@ -16,7 +17,7 @@ function checkYear(year: number) {
   }
   if (year > 3000) {
     throwError(
-      `Year arg "${year}" is too high! If this is still a thing next millenia, I'll rewrite it...`
+      `Year arg "${year}" is too high! If this is still a thing next millenia, I'll rewrite it...`,
     );
   }
 }
@@ -29,7 +30,7 @@ function copyDayFiles(
   sourceFolder: string,
   targetFolder: string,
   day: string,
-  replaceToken: string
+  replaceToken: string,
 ) {
   const files = fs.readdirSync(sourceFolder);
   files.forEach(function (file) {
@@ -43,7 +44,7 @@ function copyAndReplace(
   filePath: string,
   destPath: string,
   replaceToken: string,
-  replaceWith: string
+  replaceWith: string,
 ) {
   const data = fs.readFileSync(filePath);
   const replaced = data.toString().replaceAll(replaceToken, replaceWith);
@@ -59,26 +60,24 @@ function main() {
   for (let i = 1; i <= 25; i++) {
     const dayNice = makeLeadingZeroDay(i);
 
-    console.log(`🎁 On the ${ordinal(i)} day of Xmas... `);
+    print(`🎁 On the ${ordinal(i)} day of Xmas... `);
 
-    const dayFolderPath = path.join(basePath, `day`, dayNice);
+    const dayFolderPath = path.join(basePath, dayNice);
     fs.mkdirSync(path.join(dayFolderPath), { recursive: true });
     copyDayFiles(templatePath, dayFolderPath, dayNice, replaceToken);
     copyAndReplace(
       path.join(__dirname, "index.ts"),
       path.join(basePath, "index.ts"),
       "YYYY",
-      year.toString()
+      year.toString(),
     );
   }
-  console.log(" ");
-  console.log("  🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄");
-  console.log(`🎅                                                         🎅`);
-  console.log(
-    `🎄   Christmas has come, your ${year} files are ready to go!  🎄`
-  );
-  console.log(`🎅                                                         🎅`);
-  console.log("  🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄🎅🎄");
+  print(PRETTY.EMPTY);
+  print(PRETTY.XMAS);
+  print(`🎅                                                          🎅`);
+  print(`🎄   Christmas has come, your ${year} files are ready to go!   🎄`);
+  print(`🎅                                                          🎅`);
+  print(PRETTY.XMAS);
 }
 
 main();

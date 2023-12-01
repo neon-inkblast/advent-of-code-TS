@@ -4,7 +4,7 @@ import path from "path";
 export function readFromFile(
   filename: string,
   dir: string = __dirname,
-  log: boolean = false
+  log: boolean = false,
 ): string[] {
   const data = fs.readFileSync(path.join(dir, filename), "utf8");
   const lines = data.split(/\n/);
