@@ -4,9 +4,9 @@ import { timeExec } from "../../utils/perf";
 import { part1 } from "./part_1";
 import { part2 } from "./part_2";
 
-export function day_XX() {
+export function day_02() {
   const color1 = chalk.greenBright;
   const color2 = chalk.redBright;
-  print(color1(`  Day XX - Part 1: ${timeExec(part1)}`));
-  print(color2(`  Day XX - Part 2: ${timeExec(part2)}`));
+  print(color1(`  Day 02 - Part 1: ${timeExec(part1)}`));
+  print(color2(`  Day 02 - Part 2: ${timeExec(part2)}`));
 }
