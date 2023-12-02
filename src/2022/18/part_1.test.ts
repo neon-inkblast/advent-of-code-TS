@@ -1,4 +1,4 @@
-import { readFromFile } from "../../../utils/io";
+import { readFromFile } from "../../utils/io";
 import { part1 } from "./part_1";
 
 describe("day 18 - part 1", () => {
