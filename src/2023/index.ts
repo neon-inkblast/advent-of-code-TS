@@ -32,7 +32,7 @@ export function run2023() {
     day_03,
     day_04,
     day_05,
-    // day_06,
+    day_06,
     // day_07,
     // day_08,
     // day_09,
@@ -59,6 +59,7 @@ export function run2023() {
   print(PRETTY.XMAS);
   print(PRETTY.EMPTY);
 
+  const start = performance.now();
   run.forEach((day, index) => {
     if (index === 0) {
       print(PRETTY.BORDER_TOP);
@@ -76,8 +77,10 @@ export function run2023() {
       print(PRETTY.BORDER_BTM);
     }
   });
+  const end = performance.now();
 
   print(PRETTY.EMPTY);
   print(PRETTY.XMAS);
   print(PRETTY.EMPTY);
+  print(`2023 runtime: ${end - start}ms`);
 }
