@@ -1,17 +1,15 @@
-import { sortAsc, splitOnEmpty } from "../../utils";
+import { ints, sortAsc, splitOnEmpty } from "../../utils";
 import { readInputFromFile } from "../../utils/io";
 
 export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
-  let items: number[] = sortAsc(lines[0].match(/\d+/g)?.map((x) => +x) ?? []);
+  let items: number[] = sortAsc(ints(lines[0]));
   let nextItems = [];
   const maps = splitOnEmpty(lines.slice(2)).map((map) =>
     map
       .slice(1)
       .map((nums) => {
-        const [destStart, sourceStart, range]: number[] = nums
-          .match(/\d+/g)
-          ?.map((x) => +x) ?? [0, 0, 0];
+        const [destStart, sourceStart, range]: number[] = ints(nums);
         return {
           start: sourceStart,
           end: sourceStart + range - 1,

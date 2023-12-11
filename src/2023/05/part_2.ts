@@ -1,4 +1,4 @@
-import { splitOnEmpty } from "../../utils";
+import { ints, splitOnEmpty } from "../../utils";
 import { readInputFromFile } from "../../utils/io";
 
 export interface Range {
@@ -11,7 +11,7 @@ export interface RangeWithConversion extends Range {
 export function part2(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
   const sortByStart = (a: Range, b: Range) => a.start - b.start;
-  let seeds: number[] = lines[0].match(/\d+/g)?.map((x) => +x) ?? [];
+  let seeds: number[] = ints(lines[0]);
   let items: Range[] = [];
   for (let i = 0; i < seeds.length; i += 2) {
     items.push({ start: seeds[i], end: seeds[i] + seeds[i + 1] - 1 });
@@ -22,9 +22,7 @@ export function part2(input?: string[]) {
     map
       .slice(1)
       .map((nums): RangeWithConversion => {
-        const [destStart, sourceStart, range]: number[] = nums
-          .match(/\d+/g)
-          ?.map((x) => +x) ?? [0, 0, 0];
+        const [destStart, sourceStart, range]: number[] = ints(nums);
         return {
           start: sourceStart,
           end: sourceStart + range - 1,
@@ -43,19 +41,18 @@ export function part2(input?: string[]) {
     while (currItem && mapIndex < mapLength && loop < 1000) {
       let map = baseMap[mapIndex];
       let { start, end, sourceToDest } = map;
+      // |»»»»»»»| source range
+      // |«««««««| destination range
+      // |███████| overlap between both
       if (currItem.end < start) {
-        // no intersection, destination too high
-        // - - - |----| - |~~~~~~~~|- - - -
+        // no intersection, destination higher than source
+        //····|»»»»»»»|····|«««««««|······
         nextItems.push(currItem);
         currItem = items.shift();
         //
         // left overlap
-        // - - - |-----|==|~~~~~~|- - - -
-      } else if (
-        currItem.start < start &&
-        currItem.end >= start &&
-        currItem.end <= end
-      ) {
+        // ······|»»»»»»»|██████████|«««««««|······
+      } else if (currItem.start < start && currItem.end >= start && currItem.end <= end) {
         const r1 = { start: currItem.start, end: start - 1 };
         const r2 = { start, end: currItem.end };
         r2.start += sourceToDest;
@@ -66,12 +63,8 @@ export function part2(input?: string[]) {
       }
       //
       // right overlap
-      // - - - |~~~~~|======|-------|- - - -
-      else if (
-        currItem.end > end &&
-        currItem.start >= start &&
-        currItem.start <= end
-      ) {
+      // ······|«««««««|██████████|»»»»»»»|······
+      else if (currItem.end > end && currItem.start >= start && currItem.start <= end) {
         const r1 = { start: currItem.start, end };
         const r2 = { start: end + 1, end: currItem.end };
         r1.start += sourceToDest;
@@ -81,8 +74,8 @@ export function part2(input?: string[]) {
         items.sort(sortByStart);
         currItem = items.shift();
         //
-        // source overlaps destination
-        // - - - |------|======|-----|- - - -
+        // source covers destination
+        // ······|»»»»»»»|██████████|»»»»»»»|······
       } else if (currItem.start < start && currItem.end > end) {
         const r1 = { start: currItem.start, end: start - 1 };
         const r2 = { start, end };
@@ -95,16 +88,16 @@ export function part2(input?: string[]) {
         items.sort(sortByStart);
         currItem = items.shift();
         //
-        // source overlaps destination overlaps source
-        // - - - |------|======|-----|- - - -
+        // destination covers source
+        // ······|«««««««|██████████|«««««««|······
       } else if (currItem.end <= end && currItem.start >= start) {
         currItem.start += sourceToDest;
         currItem.end += sourceToDest;
         nextItems.push(currItem);
         currItem = items.shift();
       } else {
-        // no intersection, destination too small
-        // - - - - |~~~~~~~~| - |----| - - -
+        // no intersection, destination lower than source
+        // ······|«««««««|···|»»»»»»»|······
 
         mapIndex++;
       }
@@ -114,7 +107,7 @@ export function part2(input?: string[]) {
     if (currItem) {
       items.push(currItem);
     }
-    // sort the list for the next iteration
+    // construct the sorted source list for the next mapping set
     items = [...nextItems, ...items].sort(sortByStart);
     nextItems = [];
   }
