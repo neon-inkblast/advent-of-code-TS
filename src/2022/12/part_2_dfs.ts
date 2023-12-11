@@ -28,12 +28,12 @@ export function part2dfs(input?: string[]) {
   let currentPath: Point[] = [];
 
   while (searching) {
-    let score = getElementByPoint(current, scores) + 1;
+    let score = getElementByPoint(current, scores)! + 1;
     // get available moves from here
     const available = findValidNext(current);
     // filter to options with worse scores
     const options = available.filter(
-      (option) => getElementByPoint(option, scores) > score,
+      (option) => getElementByPoint(option, scores)! > score,
     );
 
     if (!options || options.length < 1) {

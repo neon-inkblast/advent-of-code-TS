@@ -40,11 +40,11 @@ export function part1bfs(input?: string[]) {
     while (pQueue.length > 0) {
       const current = pQueue.shift();
       const neighbours = findValidNeighbours(current!);
-      score = getElementByPoint(current!, grid).score + 1;
+      score = getElementByPoint(current!, grid)!.score + 1;
 
       const found = neighbours.filter((n) => {
         pQueue.push(n);
-        let mNode = getElementByPoint(n, grid);
+        let mNode = getElementByPoint(n, grid)!;
         setElementByPoint(n, grid, {
           height: mNode.height,
           score,
@@ -80,7 +80,10 @@ export function part1bfs(input?: string[]) {
   }
 
   // check to see if a move is valid
-  function isValidMove(from: MapPoint, to: MapPoint) {
+  function isValidMove(from: MapPoint | null, to: MapPoint | null) {
+    if (to == null || from == null) {
+      return false;
+    }
     return to.visited === false && from.height >= to.height - 1;
   }
 }
