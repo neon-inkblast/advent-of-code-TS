@@ -33,6 +33,10 @@ export function sortDesc(arr: any[]): any[] {
   return arr.sort((a, b) => b - a);
 }
 
+export function toNumbers(arr: string[] | number[]): number[] {
+  return arr.map((x) => +x);
+}
+
 export function splitOnEmpty(arr: string[]): string[][] {
   return splitOnX(arr, "");
 }
