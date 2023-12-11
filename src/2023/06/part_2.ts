@@ -1,10 +1,9 @@
+import { ints } from "../../utils";
 import { readInputFromFile } from "../../utils/io";
 
 export function part2(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
-  const [time, record] = lines.map(
-    (line) => +(line.match(/\d+/g) ?? []).join(""),
-  );
+  const [time, record] = lines.map((line) => +ints(line).join(""));
   const half = Math.floor(time / 2);
   let winners = 0;
   let left = true;

@@ -1,11 +1,9 @@
-import { multi } from "../../utils";
+import { ints, multi } from "../../utils";
 import { readInputFromFile } from "../../utils/io";
 
 export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
-  const [times, records] = lines.map(
-    (line) => line.match(/\d+/g)?.map((x) => +x) ?? [0],
-  );
+  const [times, records] = lines.map((line) => ints(line));
   const winningScores = times.map((time, idx) => {
     const half = Math.floor(time / 2);
     let winners = 0;
