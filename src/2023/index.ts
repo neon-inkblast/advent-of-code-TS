@@ -37,7 +37,7 @@ export function run2023() {
     day_08,
     day_09,
     day_10,
-    // day_11,
+    day_11,
     // day_12,
     // day_13,
     // day_14,
