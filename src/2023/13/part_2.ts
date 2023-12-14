@@ -1,19 +1,18 @@
-import { create2dArrayOf, splitOnEmpty, sum } from "../../utils";
+import { splitOnEmpty, sum } from "../../utils";
 import { readInputFromFile } from "../../utils/io";
 
 export function part2(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
   const patterns = splitOnEmpty(lines);
 
-  const mappedPatterns = patterns.map((pattern, pIndex) => {
+  const mappedPatterns = patterns.map((pattern) => {
     let cols = new Array(pattern[0].length).fill("");
-    const rows = pattern.map((row, index) => {
+    pattern.forEach((row) => {
       row.split("").forEach((char, colIndex) => {
         cols[colIndex] += char;
       });
-      return row;
     });
-    return { rows, cols };
+    return { rows: pattern, cols };
   });
 
   // count the number of changes required to make the strings match
@@ -32,7 +31,7 @@ export function part2(input?: string[]) {
       // if two adjacent rows/cols have at most 1 difference
       if (countDiffs(arr[i], arr[i - 1]) <= 1) {
         // move out from the initial match and count differences in each pair
-        for (let l = i - 1, r = i; l >= 0 && r < arr.length; l--, r++) {
+        for (let l = i - 1, r = i; errs < 2 && l >= 0 && r < arr.length; l--, r++) {
           errs += countDiffs(arr[l], arr[r]);
         }
         // if we had exactly 1 difference (the smudge) then this is the right pair

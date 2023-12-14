@@ -5,15 +5,14 @@ export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
   const patterns = splitOnEmpty(lines);
 
-  const mappedPatterns = patterns.map((pattern, pIndex) => {
+  const mappedPatterns = patterns.map((pattern) => {
     let cols = new Array(pattern[0].length).fill("");
-    const rows = pattern.map((row, index) => {
+    pattern.forEach((row) => {
       row.split("").forEach((char, colIndex) => {
         cols[colIndex] += char;
       });
-      return row;
     });
-    return { rows, cols };
+    return { rows: pattern, cols };
   });
 
   function findMirror(arr: any[], multi: number) {
