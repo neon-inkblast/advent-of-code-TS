@@ -2,8 +2,19 @@ import { part2 } from "./part_2";
 
 describe("day 14 - part 2", () => {
   it("solves the puzzle!", () => {
-    const input = ["1", "2", "3"];
+    const input = [
+      "O....#....",
+      "O.OO#....#",
+      ".....##...",
+      "OO.#O....O",
+      ".O.....O#.",
+      "O.#..O.#.#",
+      "..O..#O..O",
+      ".......O..",
+      "#....###..",
+      "#OO..#....",
+    ];
     const result = part2(input);
-    expect(result).toBe("1");
+    expect(result).toBe(64);
   });
 });
