@@ -1,8 +1,14 @@
 export function sum<T>(arr: T[]): number {
+  if (arr.length === 0) {
+    return 0;
+  }
   return arr.map((x) => +x).reduce((a, b) => a + b);
 }
 
 export function multi<T>(arr: T[]): number {
+  if (arr.length === 0) {
+    return 0;
+  }
   return arr.map((x) => +x).reduce((a, b) => a * b);
 }
 
@@ -94,11 +100,7 @@ export function createArrayOf<T>(size: number, fill: (() => T) | T): T[] {
  * @param fill element to fill new array with, or a function that creates elements to fill
  * @returns
  */
-export function create2dArrayOf<T>(
-  rows: number,
-  columns: number,
-  fill: (() => T) | T,
-): T[][] {
+export function create2dArrayOf<T>(rows: number, columns: number, fill: (() => T) | T): T[][] {
   return createArrayOf<any>(rows, () => createArrayOf<T>(columns, fill));
 }
 
@@ -116,7 +118,5 @@ export function create3dArrayOf<T>(
   layers: number,
   fill: (() => T) | T,
 ): T[][][] {
-  return create2dArrayOf<T[]>(rows, columns, () =>
-    createArrayOf<T>(layers, fill),
-  );
+  return create2dArrayOf<T[]>(rows, columns, () => createArrayOf<T>(layers, fill));
 }
