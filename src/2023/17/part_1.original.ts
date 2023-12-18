@@ -7,6 +7,7 @@ import {
   getElementByPoint,
   isEqual,
   isInGrid,
+  multi,
   multiplyArray,
   pointToString,
   toNumbers,
@@ -18,6 +19,7 @@ interface SearchNode {
   weight: number;
   pos: Point;
   dir: Direction | null;
+  stepsInDir: number;
 }
 export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
@@ -26,18 +28,18 @@ export function part1(input?: string[]) {
   let visited = new Set();
   const gridHeight = grid.length;
   const gridWidth = grid[0].length;
-  const start = createNode([0, 0], 0, null);
+  const start = createNode([0, 0], 0, null, 0);
   const target: Point = [gridHeight - 1, gridWidth - 1];
   start.score = 0;
   queue.push(start);
 
   let loops = 0;
 
-  let current: SearchNode | undefined;
+  let current: SearchNode;
   let score = 0;
   while (queue.length > 0 && loops < 500000) {
     loops++;
-    current = queue.shift();
+    current = queue.shift()!;
     if (!current) {
       break;
     }
@@ -45,7 +47,6 @@ export function part1(input?: string[]) {
       score = current.score;
       break;
     }
-
     if (visited.has(toKey(current))) {
       continue;
     }
@@ -58,39 +59,40 @@ export function part1(input?: string[]) {
     }
   }
 
-  function getNeighbours(n: SearchNode) {
-    const directions: Direction[] = (["U", "D", "L", "R"] as Direction[]).filter(
-      (d) => n.dir !== d && n.dir !== DIRECTION_OPPOSITE[d]!,
-    ) as Direction[];
-    const neighbours: SearchNode[] = [];
-    const multiDirections = directions.forEach((d) => {
-      let mScore = n.score;
-      for (let m = 1; m <= 3; m++) {
-        const newPos = addPoints(n.pos, multiplyArray(DIRECTIONS[d], m) as Point);
-        if (isInGrid(newPos, grid)) {
-          const newNode = createNode(newPos, mScore, d);
-          mScore = newNode.score;
+  function getNeighbours(n: SearchNode): SearchNode[] {
+    const directions: Direction[] = (["U", "D", "L", "R"] as Direction[]).filter((d) => {
+      const isOppositeDirection = n.dir === DIRECTION_OPPOSITE[d];
+      const travelDistanceOk = n.dir !== d || n.stepsInDir < 3;
+      return !isOppositeDirection && travelDistanceOk;
+    }) as Direction[];
+    return directions
+      .map((d) => {
+        const newPoint = addPoints(n.pos, DIRECTIONS[d]);
+        const newSteps = n.dir === d ? n.stepsInDir + 1 : 1;
+        if (isInGrid(newPoint, grid)) {
+          const newNode = createNode(newPoint, n.score, d, newSteps);
           if (!visited.has(toKey(newNode))) {
-            neighbours.push(newNode);
+            return newNode;
           }
-        } else {
-          m = 4;
         }
-      }
-    });
-
-    return neighbours;
+        return null;
+      })
+      .filter((x) => x != null) as SearchNode[];
   }
 
-  function createNode(p: Point, score: number, d: Direction | null): SearchNode {
+  function createNode(
+    p: Point,
+    score: number,
+    d: Direction | null,
+    stepsInDir: number,
+  ): SearchNode {
     const heatLoss = getElementByPoint(p, grid)!;
 
-    return { dir: d, score: score + heatLoss, weight: heatLoss, pos: p };
+    return { dir: d, score: score + heatLoss, weight: heatLoss, pos: p, stepsInDir };
   }
 
   function toKey(n: SearchNode) {
-    return pointToString(n.pos) + "," + n.dir;
+    return pointToString(n.pos) + "," + n.dir + "," + n.stepsInDir;
   }
-  // console.log(score, loops);
   return score;
 }
