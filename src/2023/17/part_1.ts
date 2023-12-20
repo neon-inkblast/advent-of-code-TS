@@ -1,96 +1,25 @@
-import {
-  DIRECTIONS,
-  DIRECTION_OPPOSITE,
-  Direction,
-  Point,
-  addPoints,
-  getElementByPoint,
-  isEqual,
-  isInGrid,
-  multiplyArray,
-  pointToString,
-  toNumbers,
-} from "../../utils";
-import { readInputFromFile } from "../../utils/io";
+import { Point, readInputFromFile, toNumbers } from "../../utils";
+import { createGetNeighbours, createNode, dijkstraSearch } from "./helpers";
 
-interface SearchNode {
-  score: number;
-  weight: number;
-  pos: Point;
-  dir: Direction | null;
-}
 export function part1(input?: string[]) {
   const lines = input ?? readInputFromFile(__dirname);
-  let queue: SearchNode[] = [];
+  const MAX_STRAIGHT_MOVES = 3;
+  const MIN_STRAIGHT_MOVES = 1;
+
+  // convert the input to a 2D array
   const grid = lines.map((line, r) => toNumbers(line.split("")));
-  let visited = new Set();
+
+  // grid bounds
   const gridHeight = grid.length;
   const gridWidth = grid[0].length;
-  const start = createNode([0, 0], 0, null);
+  // start and target position
+  const start = createNode([0, 0], 0, null, grid);
   const target: Point = [gridHeight - 1, gridWidth - 1];
+  // reset start score to 0
   start.score = 0;
-  queue.push(start);
 
-  let loops = 0;
+  const getNeighbours = createGetNeighbours(MIN_STRAIGHT_MOVES, MAX_STRAIGHT_MOVES, grid);
 
-  let current: SearchNode | undefined;
-  let score = 0;
-  while (queue.length > 0 && loops < 500000) {
-    loops++;
-    current = queue.shift();
-    if (!current) {
-      break;
-    }
-    if (isEqual(current.pos, target)) {
-      score = current.score;
-      break;
-    }
-
-    if (visited.has(toKey(current))) {
-      continue;
-    }
-    visited.add(toKey(current));
-    const neigh = getNeighbours(current);
-
-    if (neigh.length > 0) {
-      queue.push(...neigh);
-      queue.sort((a, b) => a.score - b.score);
-    }
-  }
-
-  function getNeighbours(n: SearchNode) {
-    const directions: Direction[] = (["U", "D", "L", "R"] as Direction[]).filter(
-      (d) => n.dir !== d && n.dir !== DIRECTION_OPPOSITE[d]!,
-    ) as Direction[];
-    const neighbours: SearchNode[] = [];
-    const multiDirections = directions.forEach((d) => {
-      let mScore = n.score;
-      for (let m = 1; m <= 3; m++) {
-        const newPos = addPoints(n.pos, multiplyArray(DIRECTIONS[d], m) as Point);
-        if (isInGrid(newPos, grid)) {
-          const newNode = createNode(newPos, mScore, d);
-          mScore = newNode.score;
-          if (!visited.has(toKey(newNode))) {
-            neighbours.push(newNode);
-          }
-        } else {
-          m = 4;
-        }
-      }
-    });
-
-    return neighbours;
-  }
-
-  function createNode(p: Point, score: number, d: Direction | null): SearchNode {
-    const heatLoss = getElementByPoint(p, grid)!;
-
-    return { dir: d, score: score + heatLoss, weight: heatLoss, pos: p };
-  }
-
-  function toKey(n: SearchNode) {
-    return pointToString(n.pos) + "," + n.dir;
-  }
-  // console.log(score, loops);
-  return score;
+  // return final answer
+  return dijkstraSearch(start, target, getNeighbours);
 }
