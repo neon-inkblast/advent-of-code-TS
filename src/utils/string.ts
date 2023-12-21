@@ -7,7 +7,12 @@ export interface PadOptions {
   token?: string;
 }
 
-export function ints(input: string): number[] {
+export function ints(input: string, includeNegatives = false): number[] {
+  const result = (includeNegatives ? input.match(/-?\d+/g) : input.match(/\d+/g)) ?? [];
+  return toNumbers(result);
+}
+
+export function getDigits(input: string): number[] {
   return toNumbers(input.match(/\d+/g) ?? []);
 }
 
